@@ -1,0 +1,26 @@
+<h1>New Resource</h1>
+
+<%= form_with(model: @resource) do |form| %>
+
+ <div>
+   <%= form.label :name %>
+   <%= form.text_field :name %>
+   
+ </div>
+
+ <div>
+   <%= form.label :link %>
+   <%= form.text_field :link %>
+ </div>
+
+ <div>
+   <%= form.submit %>
+ </div>
+
+<% end %>
+
+<br>
+
+<div>
+ <%= link_to "Back to home", root_path %>
+</div>
