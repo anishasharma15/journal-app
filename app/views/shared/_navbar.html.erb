@@ -1,25 +1,25 @@
-<nav class="TutorHub navbar-expand-lg bg-body-tertiary">
+<nav class="TutorHub navbar-expand-lg bg-body-tertiary" style="background-color: #e3f2fd;" data-bs-theme="dark">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">TutorHub</a>
+    <a class="navbar-brand text-light" href="#">TutorHub</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="TutorHub-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item text-light">
           <%= link_to "Home", root_path, class: "nav-link active", "aria-current": "page" %>
         </li>
-        <li class="nav-item">
+        <li class="nav-item text-light">
           <%= link_to "New Resource", new_resource_path, class: "nav-link" %>
         </li>
-        <li class="nav-item dropdown">
+        <li class="nav-item dropdown text-light">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             ResourceHub
           </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Teacher</a></li>
-            <li><a class="dropdown-item" href="#">Student</a></li>
-          </ul>
+            <ul class="dropdown-menu" data-bs-theme="dark">
+            <li><a class="dropdown-item text-light" href="#">Teacher</a></li>
+            <li><a class="dropdown-item text-light" href="#">Student</a></li>
+            </ul>
         </li>
       </ul>
       <form class="d-flex" role="search">
