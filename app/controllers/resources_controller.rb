@@ -10,7 +10,7 @@ class ResourcesController < ApplicationController
    def create
         @resource = Resource.new(resource_params)
         if @resource.save
-            redirect_to root_url
+            redirect_to browse_resources_url
         else
             render :new
         end
