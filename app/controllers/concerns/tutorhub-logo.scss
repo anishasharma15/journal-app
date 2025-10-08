@@ -1,7 +1,14 @@
-.navbar-brand .tutorhub-logo {
+.tutorhub-logo {
   width: 20px;
   height: 25px;
   max-width: 30px;
   display: inline-block;
   vertical-align: text-top;
+}
+
+.flex-center-container {
+  display: flex;             /* Make it a flex container */
+  justify-content: center;   /* Horizontally center items */
+  align-items: center;       /* (Optional) Vertically center items if container has height */
+  /* min-height: 100px; /* Example: give it some height if you want vertical centering */
 }

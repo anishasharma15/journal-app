@@ -1,5 +1,16 @@
-<h1 class="text-center">Welcome to TutorHub</h1>
+<div class="container">
+    <div class="row mt-5 justify-content-center">
+        <div class="col-12 text-center
+        
+<div class="flex-center-container">
+<%= image_tag "logo.png", alt: "TutorHub Logo", class: "tutorhub-logo" %>
+</div>
 <h2 class="text-center">Your go-to platform for educational resources!</h2>
+<p class="text-center"> TutorHub is your go-to resource library turning professional tutoring materials into accessible study guides</p>
+   <form class="d-flex" role="search">
+        <input class="form-control me-2" type="search" placeholder="Find resources by subject or topic" aria-label="Search"/>
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
 <div>
  <% @resources.each do |resource| %>
    <%= resource.name %>

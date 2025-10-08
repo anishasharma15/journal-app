@@ -9,3 +9,10 @@
  * Consider organizing styles into separate files for maintainability.
  */
 @import "bootstrap";
+
+.flex-center-container {
+  display: flex;             /* Make it a flex container */
+  justify-content: center;   /* Horizontally center items */
+  align-items: center;       /* (Optional) Vertically center items if container has height */
+  /* min-height: 100px; /* Example: give it some height if you want vertical centering */
+}

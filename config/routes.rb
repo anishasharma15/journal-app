@@ -16,4 +16,5 @@ end
 Rails.application.routes.draw do
  root 'resources#index'
  resources :resources, only: [:create, :new, :destroy]
+  get 'resources/browse', to: 'resources#browse', as: 'browse_resources'
 end

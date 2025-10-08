@@ -1,26 +1,38 @@
-<h3>Upload Resource</h3>
+<div class="container">
+  <div class="row mt-5 justify-content-center">
+    <div class="col-12 text-center">  <%# Sets column width and centers text %>
 
-<%= form_with(model: @resource) do |form| %>
+      <h3>Upload New Resource</h3>
 
- <div>
-   <%= form.label :name %>
-   <%= form.text_field :name %>
-   
- </div>
+      <%= form_with(model: @resource) do |form| %>
+        
+        <div class="mb-3">
+          <%= form.label :title, class: "form-label" %>
+          <%= form.text_field :title, class: "form-control" %>
+        </div>
 
- <div>
-   <%= form.label :link %>
-   <%= form.text_field :link %>
- </div>
+        <div class="mb-3">
+          <%= form.label :description, class: "form-label" %>
+          <%= form.text_area :description, class: "form-control" %>
+        </div>
 
- <div>
-   <%= form.submit %>
- </div>
+        <div class="mb-3">
+          <%= form.label :upload_file_or_link, class: "form-label" %>
+          <%= form.text_field :title, class: "form-control" %>
+        </div>
 
-<% end %>
+        <div class="d-grid"> <%# d-grid makes the submit button full width %>
+          <%= form.submit class: "btn btn-primary" %>
+        </div>
 
-<br>
+      <% end %>
 
-<div>
- <%= link_to "Back to home", root_path %>
+      <br>
+
+      <div>
+       <%= link_to "Back to home", root_path %>
+      </div>
+      
+    </div>
+  </div>
 </div>
