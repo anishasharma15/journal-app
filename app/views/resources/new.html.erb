@@ -18,11 +18,11 @@
 
         <div class="mb-3">
           <%= form.label :upload_file_or_link, class: "form-label" %>
-          <%= form.text_field :title, class: "form-control" %>
+          <%= form.text_field :upload_file_or_link, class: "form-control" %>
         </div>
 
         <div class="d-grid"> <%# d-grid makes the submit button full width %>
-          <%= form.submit class: "btn btn-primary" %>
+          <%= form.submit "Upload Resource", class: "btn btn-primary" %>
         </div>
 
       <% end %>
