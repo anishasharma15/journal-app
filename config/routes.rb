@@ -18,7 +18,9 @@ Rails.application.routes.draw do
  resources :resources, only: [:create, :new, :destroy]
   get 'resources/browse', to: 'resources#browse', as: 'browse_resources'
   get 'createaccount/create', to: 'createaccount#create', as: 'create_account'
-  get 'signin',  to: 'sessions#new',     as: 'signin'
-  post 'signin', to: 'sessions#create'
-  delete 'signout', to: 'sessions#destroy', as: 'signout'
+  get 'signin',  to: 'signin#new',     as: 'signin'
+  post 'signin', to: 'signin#create'
+  delete 'signout', to: 'signin#destroy', as: 'signout'
+  get 'teacheraccount', to: 'teacheraccount#index', as: 'teacher_account'
+  get 'studentaccount', to: 'studentaccount#index', as: 'student_account'
 end

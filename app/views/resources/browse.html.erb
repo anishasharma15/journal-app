@@ -62,6 +62,12 @@
       <th scope="col" class="text-center">
         <%= link_to "Rating", resources_path(sort: 'rating', direction: 'desc'), class: "text-decoration-none text-dark" %>
       </th>
+
+        <th scope="col" class="text-center">
+        <%= link_to "Download", resources_path(sort: 'download', direction: 'desc'), class: "text-decoration-none text-dark" %>
+      </th>
+
+    <div>
       
     </tr>
   </thead>
@@ -73,6 +79,7 @@
       <td class="text-center">Worksheet</td>
       <td class="text-center">Ms. Smith</td>
       <td class="text-center">⭐4.8</td>
+        <td class="text-center"><a href="#">⬇️</a></td>
     </tr>
     <tr>
       <td>French Revolution Timeline</td>
@@ -81,6 +88,7 @@
       <td class="text-center">Notes</td>
       <td class="text-center">Mr. Jones</td>
       <td class="text-center">⭐4.2</td>
+      <td class="text-center"><a href="#">⬇️</a></td>
     </tr>
     <tr>
       <td>Quantum Basics Video</td>
@@ -89,6 +97,7 @@
       <td class="text-center">Video</td>
       <td class="text-center">Dr. Lee</td>
       <td class="text-center">⭐5.0</td>
+      <td class="text-center"><a href="#">⬇️</a></td>
     </tr>
   </tbody>
 </table>

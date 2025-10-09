@@ -11,10 +11,3 @@
         <input class="form-control me-2" type="search" placeholder="Find resources by subject or topic" aria-label="Search"/>
         <button class="btn btn-outline-success" type="submit">Search</button>
       </form>
-<div>
- <% @resources.each do |resource| %>
-   <%= resource.name %>
-   <%= resource.link %>
-   <%= button_to "Delete", resource, method: :delete, data: { confirm: "Are you sure you want to delete this Resource?" } %>
- <% end %>
-</div>
