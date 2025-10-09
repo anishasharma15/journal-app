@@ -27,19 +27,29 @@
           </ul>
         </li>
       </ul>
-      <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-<ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-  <li class="nav-item">
+
+<div class="navbar-nav ms-auto"> <%# ms-auto pushes content to the right %>
+
+  <% if user_signed_in? %>
+    
+    <span class="navbar-text me-3">
+    <%= current_user.username %><%# Optional: show username %>
+    </span>
+    
+    <%= link_to "Sign Out", sign_out_path, data: { turbo_method: :delete }, class: "btn btn-primary" %>
+
+  <% else %>
+    
+    <%# Sign In button (Blue) %>
     <%= link_to "Sign In", signin_path, class: "btn btn-primary me-2" %>
-  </li>
-  <li>
-  <%= link_to "Sign Out", sign_out_path, method: :delete, class: "btn btn-primary" if session[:user_id] %>
-</li>
-  <li class="nav-item">
+    
+    <%# Create an Account button (Light Blue/Cyan) %>
     <%= link_to "Create an Account", create_account_path, class: "btn btn-info" %>
-  </li>
-</ul>
+
+  <% end %>
+
 </div>
+
     </div>
   </div>
 </nav>
