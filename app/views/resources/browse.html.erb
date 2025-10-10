@@ -2,72 +2,47 @@
 <br>
   <h1 class="text-center mb-4">Browse All Resources</h1>
 
-<table class="table table-striped table-hover align-middle">
-  <thead class="table-light">
-    <tr>
-      <%# --- SORTING LINK: Title (Kept simple) --- %>
-      <th scope="col">Title</th>
+<div class="row">
+  <div class="col-12">
+    <%= form_with(url: browse_resources_path, method: :get, local: true, class: "d-flex mt-3") do |form| %> 
+      <%= form.text_field :query, 
+                          value: params[:query],
+                          class: "form-control me-2", 
+                          placeholder: "Find resources by subject or topic" %>
 
-      <%# --- DROPDOWN FILTER: SUBJECT --- %>
-      <th scope="col" class="text-center">
-        <div class="dropdown">
-          <button class="btn btn-sm btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Subject
-          </button>
-          <ul class="dropdown-menu">
-            <li><%= link_to "All Subjects", resources_path(subject: nil), class: "dropdown-item" %></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><%= link_to "Math", resources_path(subject: 'Math'), class: "dropdown-item" %></li>
-            <li><%= link_to "History", resources_path(subject: 'History'), class: "dropdown-item" %></li>
-          </ul>
-        </div>
-      </th>
-      
-      <%# --- DROPDOWN FILTER: LEVEL --- %>
-      <th scope="col" class="text-center">
-        <div class="dropdown">
-          <button class="btn btn-sm btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Level
-          </button>
-          <ul class="dropdown-menu">
-            <li><%= link_to "All Levels", resources_path(level: nil), class: "dropdown-item" %></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><%= link_to "GCSE", resources_path(level: 'GCSE'), class: "dropdown-item" %></li>
-            <li><%= link_to "A-Level", resources_path(level: 'A-Level'), class: "dropdown-item" %></li>
-          </ul>
-        </div>
-      </th>
-      
-      <%# --- DROPDOWN FILTER: RESOURCE TYPE --- %>
-      <th scope="col" class="text-center">
-        <div class="dropdown">
-          <button class="btn btn-sm btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Resource Type
-          </button>
-          <ul class="dropdown-menu">
-            <li><%= link_to "All Types", resources_path(type: nil), class: "dropdown-item" %></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><%= link_to "PDF", resources_path(type: 'PDF'), class: "dropdown-item" %></li>
-            <li><%= link_to "Video", resources_path(type: 'Video'), class: "dropdown-item" %></li>
-          </ul>
-        </div>
-      </th>
-      
-      <%# --- SORTING LINK: Tutor --- %>
-      <th scope="col" class="text-center">Tutor</th>
-      
-      <%# --- SORTING LINK: Rating --- %>
-      <th scope="col" class="text-center">
-        <%= link_to "Rating", resources_path(sort: 'rating', direction: 'desc'), class: "text-decoration-none text-dark" %>
-      </th>
+      <div class="input-group-append">
+        <%= form.submit "Search", class: "btn btn-outline-success" %>
+      </div>
+    <% end %>
+  </div>
+</div>
 
-        <th scope="col" class="text-center">
-        <%= link_to "Download", resources_path(sort: 'download', direction: 'desc'), class: "text-decoration-none text-dark" %>
-      </th>
-    </tr>
-    </thead>
-</table>
+<br>
 
+<%= form_with(url: browse_resources_path, method: :get, local: true, class: "d-flex justify-content-start align-items-center mb-4") do |form| %>
+
+  <!-- Keep the keyword search query hidden so it persists when filters are used -->
+  <%= hidden_field_tag :query, params[:query] %>
+  
+  <div class="me-3">
+    <%= select_tag :subject, 
+                    options_for_select(['Maths', 'Science', 'History', 'English', 'Economics', 'Geography'], params[:subject]), 
+                    { include_blank: 'Filter by Subject', class: 'form-select', onchange: 'this.form.submit();' } %>
+  </div>
+
+  <div class="me-3">
+    <%= select_tag :level, 
+                    options_for_select(['GCSE', 'A-Level', 'Undergraduate', 'Postgraduate'], params[:level]), 
+                    { include_blank: 'Filter by Level', class: 'form-select', onchange: 'this.form.submit();' } %>
+  </div>
+
+  <div class="me-3">
+    <%= select_tag :resource_type, 
+                    options_for_select(['Document', 'Video', 'Quiz', 'Website', 'TedTalk', 'Forum'], params[:resource_type]), 
+                    { include_blank: 'Filter by Type', class: 'form-select', onchange: 'this.form.submit();' } %>
+  </div>
+
+<% end %>
 
   <% if @resources.any? %>
   <div class="row">
@@ -75,10 +50,36 @@
     <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
       <div class="card h-100">
         <div class="card-body">
-          <h5 class="card-title"><%= resource.title %></h5>
-          <h6 class="card-subtitle mb-2 text-body-secondary"><%= resource.description %></h6>
-          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card’s content.</p>
-          <a href="<%= resource.upload_file_or_link %>" class="card-link" target="_blank">View Resource</a>
+          <h4 class="card-title"><%= resource.title %></h4>
+          <h5 class="card-subtitle mb-2 text-body-secondary"><%= resource.subject %></h5>
+          <h6 class="card-subtitle mb-2 text-body-secondary"><%= resource.grade_level %></h6>
+          <h6 class="card-subtitle mb-2 text-body-secondary"><%= resource.resource_type %></h6>
+          <p class="card-text"><%= resource.description %></p>
+          <a href="<%= resource.upload_file_or_link %>" class="card-link" target="_blank">Link to Resource</a>
+
+<% if resource.description.length > 200 %>
+  <button class="btn btn-link read-more-btn" data-target-id="description-<%= resource.id %>">
+    Read More
+  </button>
+<% end %>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.read-more-btn').forEach(button => {
+      button.addEventListener('click', function() {
+        const targetId = this.getAttribute('data-target-id');
+        const descriptionElement = document.getElementById(targetId);
+        const isExpanded = descriptionElement.classList.toggle('expanded');
+        
+        if (isExpanded) {
+          this.textContent = 'Read Less';
+        } else {
+          this.textContent = 'Read More';
+        }
+      });
+    });
+  });
+</script>
         </div>
       </div>
     </div>

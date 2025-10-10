@@ -8,21 +8,55 @@
 <h2 class="text-center">Your go-to platform for educational resources!</h2>
 <p class="text-center"> TutorHub is your go-to resource library turning professional tutoring materials into accessible study guides</p>
 
-<%= form_with(url: browse_resources_path, method: :get, local: true, class: "d-flex justify-content-center mt-5") do |form| %>
+<div class="container my-5"> 
   
-  <div class="input-group">
-    
-    <%# The text field where the user types the query %>
-    <%= form.text_field :query, 
-                        value: params[:query], # Keeps the search term in the box after searching
-                        class: "form-control me-2", 
-                        placeholder: "Find resources by subject or topic" %>
-    
-    <%# The Search button %>
-    <div class="input-group-append">
-      <%= form.submit "Search", class: "btn btn-outline-success" %>
-    </div>
-    
-  </div>
+  <!-- Centered Wrapper: Limits the row's total width to 10 out of 12 columns (on large screens) 
+       and centers that block on the page using mx-auto. This creates the centered group. -->
+  <div class="col-12 col-lg-10 mx-auto">
 
-<% end %>
+    <!-- Row setup:
+         - row-cols-1: Stacks cards vertically on mobile (small screens).
+         - row-cols-md-3: Puts 3 cards per row on medium screens and up (tablets/desktops).
+         - g-4: Adds spacing/gutters between the columns.
+         - justify-content-center: Ensures the columns are aligned centrally within the wrapper.
+    -->
+    <div class="row row-cols-1 row-cols-md-3 g-4 justify-content-center">
+
+      <!-- CARD 1: Each card MUST be in its own <div class="col"> -->
+      <div class="col">
+        <!-- h-100 ensures the card takes 100% of the column height, making all cards in the row equal. -->
+        <div class="card h-100 border-0 shadow-sm text-center p-3">
+          <div class="card-body">
+            <!-- Icon placeholder (replace with actual icon/SVG) -->
+            <h1 class="mb-3 text-success">🌐</h1>
+            <h5 class="card-title">Global Tutor Network</h5>
+            <p class="card-text text-secondary">Access materials uploaded by qualified tutors and educators from the world.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- CARD 2 -->
+      <div class="col">
+        <div class="card h-100 border-0 shadow-sm text-center p-3">
+          <div class="card-body">
+            <h1 class="mb-3 text-success">🎓</h1>
+            <h5 class="card-title">Find Your Level</h5>
+            <p class="card-text text-secondary">Easily filter resources by A-Level, University, or any specific grade level to match your needs.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- CARD 3 -->
+      <div class="col">
+        <div class="card h-100 border-0 shadow-sm text-center p-3">
+          <div class="card-body">
+            <h1 class="mb-3 text-success">⭐</h1>
+            <h5 class="card-title">Quality Assured</h5>
+            <p class="card-text text-secondary">Every resource is rated by users like you, ensuring you only spend time on the best study guides.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

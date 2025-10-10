@@ -1,0 +1,17 @@
+/* 1. Makes the cards more uniform/smaller. Adjust min-height as needed. */
+.resource-card {
+    min-height: 250px; 
+}
+
+/* 2. Style to handle the initial truncation (hide the overflow) */
+.truncate-text {
+    max-height: 80px; /* Adjust this to control how many lines are visible */
+    overflow: hidden; 
+    transition: max-height 0.3s ease-out; /* For smooth transition on expand */
+}
+
+/* 3. Class added by JavaScript to expand the card */
+.resource-description.expanded {
+    max-height: 2000px; /* A large value to ensure ALL text shows */
+    overflow: visible;
+}

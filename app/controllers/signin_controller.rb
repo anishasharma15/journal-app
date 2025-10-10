@@ -33,7 +33,6 @@ class SigninController < ApplicationController
     else
       # FAILED LOGIN
       flash.now[:alert] = "Invalid email or password combination"
-      render :new, status: :unauthorized # Renders the form again with an error
     end
 
 end

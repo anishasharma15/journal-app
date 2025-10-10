@@ -1,12 +1,21 @@
 class ResourcesController < ApplicationController
-  # List all resources (browse page)
+  
+  # List all resources (browse page) - This will be the main display action
   def browse
-    @resources = Resource.all
+    # Use the combined method from the model to handle keyword search and all filters
+    @resources = Resource.search_and_filter(params)
+    
+    # Note: If you have a separate 'index' view, you can either remove it 
+    # or alias it to this 'browse' action in your routes.
   end
 
-  # Standard index (optional, can alias to browse)
+  # Standard index (optional, can alias to browse) - Logic removed as 'browse' handles it
+  # If you use 'index' in your routes, it's best to keep this action, 
+  # but simplify it to call the same logic as browse.
   def index
-    @resources = Resource.all
+    # We delegate filtering logic to the 'browse' action's implementation
+    # Note: In a real app, you would likely just make one of these primary.
+    @resources = Resource.search_and_filter(params)
   end
 
   # Form for new resource
@@ -53,10 +62,12 @@ class ResourcesController < ApplicationController
     @resource = Resource.find(params[:id]) 
   end
 
+  # REMOVED DUPLICATE 'browse' METHOD HERE
+
   private
 
   # Strong parameters
   def resource_params
-    params.require(:resource).permit(:title, :description, :upload_file_or_link)
+    params.require(:resource).permit(:title, :subject, :grade_level, :resource_type, :description, :upload_file_or_link)
   end
 end
