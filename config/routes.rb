@@ -32,5 +32,5 @@ Rails.application.routes.draw do
   delete '/signout', to: 'signin#destroy', as: 'sign_out'
   get 'teacheraccount', to: 'teacheraccount#index', as: 'teacher_account'
   get 'studentaccount', to: 'studentaccount#index', as: 'student_account'
-# get 'resources/:id/edit', to: 'resources#edit', as: 'edit_resource' #
+#  get 'resources/edit', to: 'resources#edit', as: 'edit_resource' #
 end

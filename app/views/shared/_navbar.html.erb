@@ -22,6 +22,10 @@
 <div class="navbar-nav ms-auto"> <%# ms-auto pushes content to the right %>
 
   <% if user_signed_in? %>
+
+    <%# Profile link %>
+    <%= link_to "Profile", profile_path, class: "nav-link text-light me-3" %>
+    
     
     <%# Optional: Display the user's name/email %>
     <span class="navbar-text me-3 text-light">
