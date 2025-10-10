@@ -27,6 +27,9 @@ class ResourcesController < ApplicationController
   # Form to edit an existing resource
   def edit
     @resource = Resource.find(params[:id])
+      if @resource.nil?
+    redirect_to browse_resources_path, alert: "Resource not found."
+  end
   end
 
   # Handle update submission
@@ -44,6 +47,10 @@ class ResourcesController < ApplicationController
     @resource = Resource.find(params[:id])
     @resource.destroy
     redirect_to browse_resources_path, notice: "Resource deleted successfully."
+  end
+
+  def show
+    @resource = Resource.find(params[:id]) 
   end
 
   private

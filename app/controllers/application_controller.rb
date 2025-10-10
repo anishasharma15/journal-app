@@ -9,6 +9,6 @@ class ApplicationController < ActionController::Base
 
   def user_signed_in?
     # This method relies on the current_user method
-    !current_user.nil?
+    !!current_user
   end
 end

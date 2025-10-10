@@ -1,0 +1,94 @@
+<div class="container">
+  <div class="row mt-5 justify-content-center">
+    <div class="col-12 text-center">  <%# Sets column width and centers text %>
+
+<% if @user.errors.any? %>
+  <div id="error_explanation" style="color: red; padding: 10px; border: 1px solid red; margin-bottom: 20px;">
+    <h2><%= pluralize(@user.errors.count, "error") %> prevented this account from being saved:</h2>
+    <ul>
+      <% @user.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<h3>Create an Account</h3>
+
+<div class="mt-5 input-size">
+    <%= form_with model: @user, url: createaccount_index_path, local: true do |form| %>
+
+        <div class="mb-3 row">
+            <div class="col-md-3">
+              <%= form.label :name, class: "form-label" %>
+            </div>
+            <div class="col-md-9">
+              <%= form.text_field :name, class: "form-control border-dark", required: true %>
+            </div>
+          </div>
+
+       <div class="mb-3 row">
+            <div class="col-md-3">
+              <%= form.label :email, class: "form-label" %>
+            </div>
+            <div class="col-md-9">
+              <%= form.email_field :email, class: "form-control border-dark", required: true %>
+            </div>
+          </div>
+          
+          <div class="mb-3 row">
+            <div class="col-md-3">
+              <%= form.label :password, class: "form-label" %>
+            </div>
+            <div class="col-md-9">
+              <%= form.password_field :password, class: "form-control border-dark", required: true %>
+            </div>
+          </div>
+
+          <div class="field">
+            <div class="role-selection">
+              <%= form.radio_button :role, 'teacher' %>
+              <%= form.label :role_teacher, 'Teacher' %>
+
+    <%= form.radio_button :role, 'student' %>
+    <%= form.label :role_student, 'Student' %>
+  </div>
+</div>
+
+<style>
+  /* Simple CSS for better layout */
+  .role-selection input {
+    margin-left: 15px;
+  }
+  .field {
+    margin-bottom: 15px;
+  }
+</style>
+
+            <div class="mb-3 row">
+            <div class="col-md-3">
+              <%= form.label :subject, class: "form-label" %>
+            </div>
+            <div class="col-md-9">
+              <%= form.text_field :subject, class: "form-control border-dark", required: true %>
+            </div>
+          </div>
+
+            <div class="mb-3 row">
+            <div class="col-md-3">
+              <%= form.label :grade_level, class: "form-label" %>
+            </div>
+            <div class="col-md-9">
+              <%= form.text_field :grade_level, class: "form-control border-dark", required: true %>
+            </div>
+          </div>
+
+    <div class="text-center">
+      <%= form.submit "Create Account", class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>
+
+
+
+      

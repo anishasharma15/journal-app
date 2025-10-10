@@ -7,7 +7,22 @@
 </div>
 <h2 class="text-center">Your go-to platform for educational resources!</h2>
 <p class="text-center"> TutorHub is your go-to resource library turning professional tutoring materials into accessible study guides</p>
-   <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Find resources by subject or topic" aria-label="Search"/>
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
+
+<%= form_with(url: browse_resources_path, method: :get, local: true, class: "d-flex justify-content-center mt-5") do |form| %>
+  
+  <div class="input-group">
+    
+    <%# The text field where the user types the query %>
+    <%= form.text_field :query, 
+                        value: params[:query], # Keeps the search term in the box after searching
+                        class: "form-control me-2", 
+                        placeholder: "Find resources by subject or topic" %>
+    
+    <%# The Search button %>
+    <div class="input-group-append">
+      <%= form.submit "Search", class: "btn btn-outline-success" %>
+    </div>
+    
+  </div>
+
+<% end %>

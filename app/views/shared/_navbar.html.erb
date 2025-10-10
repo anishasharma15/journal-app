@@ -14,37 +14,30 @@
         <li class="nav-item">
           <%= link_to "Upload Resource", new_resource_path, class: "nav-link text-light" %>
         </li>
-        <li class="nav-item dropdown">
-         <li class="nav-item">
+        <li class="nav-item">
           <%= link_to "Browse Resources", browse_resources_path, class: "nav-link text-light" %>
         </li>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Subject</a></li>
-            <li><a class="dropdown-item" href="#">Level</a></li>
-            <li><a class="dropdown-item" href="#">Resource Type</a></li>
-            <li><a class="dropdown-item" href="#">Tutor</a></li>
-            <li><a class="dropdown-item" href="#">Rating</a></li>
-          </ul>
-        </li>
-      </ul>
+        </ul>
 
 <div class="navbar-nav ms-auto"> <%# ms-auto pushes content to the right %>
 
   <% if user_signed_in? %>
     
-    <span class="navbar-text me-3">
-    <%= current_user.username %><%# Optional: show username %>
+    <%# Optional: Display the user's name/email %>
+    <span class="navbar-text me-3 text-light">
+      Welcome, <%= current_user.try(:name) || current_user.email %> 
     </span>
     
-    <%= link_to "Sign Out", sign_out_path, data: { turbo_method: :delete }, class: "btn btn-primary" %>
+    <%# Sign Out button %>
+    <%= link_to "Sign Out", sign_out_path, data: { turbo_method: :delete }, class: "btn btn-light" %>
 
   <% else %>
+
+    <%# Sign In button %>
+    <%= link_to "Sign In", sign_in_path, class: "btn btn-primary me-2" %>
     
-    <%# Sign In button (Blue) %>
-    <%= link_to "Sign In", signin_path, class: "btn btn-primary me-2" %>
-    
-    <%# Create an Account button (Light Blue/Cyan) %>
-    <%= link_to "Create an Account", create_account_path, class: "btn btn-info" %>
+    <%# Create an Account button %>
+    <%= link_to "Create an Account", new_createaccount_path, class: "btn btn-info" %>
 
   <% end %>
 

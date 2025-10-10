@@ -14,10 +14,16 @@ Rails.application.routes.draw do
 end
 
 Rails.application.routes.draw do
- root 'resources#index'
- resources :resources, only: [:create, :new, :destroy]
+  root 'resources#index'
+  
+  # 1. MOVE STATIC ROUTE HERE (Must be first)
   get 'resources/browse', to: 'resources#browse', as: 'browse_resources'
-  get 'createaccount/create', to: 'createaccount#create', as: 'create_account'
+
+  # 2. Dynamic resources block comes second
+  resources :resources, only: [:create, :new, :destroy, :edit, :update, :index, :show]
+  
+  # ... rest of your routes (createaccount, signup, signin, etc.)
+  resources :createaccount, only: [:new, :create], path: 'createaccount'
   get  'signup', to: 'users#new',    as: 'sign_up'
   post 'signup', to: 'users#create'
 
@@ -26,4 +32,5 @@ Rails.application.routes.draw do
   delete '/signout', to: 'signin#destroy', as: 'sign_out'
   get 'teacheraccount', to: 'teacheraccount#index', as: 'teacher_account'
   get 'studentaccount', to: 'studentaccount#index', as: 'student_account'
+# get 'resources/:id/edit', to: 'resources#edit', as: 'edit_resource' #
 end

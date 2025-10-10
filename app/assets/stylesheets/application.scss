@@ -16,3 +16,29 @@
   align-items: center;       /* (Optional) Vertically center items if container has height */
   /* min-height: 100px; /* Example: give it some height if you want vertical centering */
 }
+
+/* --- Assuming this structure is common to your form --- */
+.form-field-wrapper {
+  display: flex; /* Use flexbox for alignment */
+  margin-bottom: 15px; /* Spacing between fields */
+  align-items: center; /* Vertically center the elements */
+}
+
+.form-field-wrapper label {
+  /* This width should match the width of all your other labels (Name, Email, etc.) */
+  width: 150px; 
+  text-align: right; 
+  padding-right: 10px;
+}
+
+/* --- The new styles for the radio buttons --- */
+.radio-button-group {
+  /* This makes the radio group take up the remaining space, aligning it with the inputs */
+  flex-grow: 1; 
+  text-align: left; /* Ensure the buttons start on the left of their column */
+}
+
+/* Optional: Add spacing between the Teacher and Student options */
+.radio-button-group label {
+  margin-right: 20px;
+}
