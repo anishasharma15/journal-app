@@ -20,18 +20,63 @@ class UsersController < ApplicationController
 
   # POST /users
   # Creates a new user based on the submitted parameters.
-  def create
-    @user = User.new(user_params)
-    if @user.save
-      # Use your custom session key: session[:user_id]
-      reset_session
-      session[:user_id] = @user.id 
-      # Note: I'm guessing 'welcome_path' is correct here.
-      redirect_to welcome_path(locale: I18n.locale), notice: I18n.t('users.signed_up')
-    else
-      render :new, status: :unprocessable_content
-    end
+def create
+  @user = User.new(user_params) # Initializes user with username, email, password
+  
+  # *** MISSING ROLE ASSIGNMENT HERE ***
+  
+  if @user.save
+    # ... redirects
+  else
+    # ... renders :new
   end
+end
+And your permitted parameters (user_params) also do not include :role:
+
+Ruby
+
+# UsersController#user_params
+def user_params
+  params.require(:user).permit(:username, :email, :password) # <-- :role is missing
+end
+When a user signs up using this controller, the role field in the database is left as nil, which is why your sign-in logic was redirecting the user to root_path.
+
+The Fix: Set the Role During Sign-Up
+Assuming this controller is exclusively for signing up students (which seems logical based on your application structure), you need to explicitly set the role before saving.
+
+1. Update UsersController#create
+Since this is the general sign-up controller, you need a way to assign the role. If all users signing up here are meant to be students, set the role directly in the controller:
+
+Ruby
+
+# app/controllers/users_controller.rb
+
+def create
+  # The 'new' action might involve a form asking for role, 
+  # but since it's not in user_params, we'll assume a default role for this controller.
+  
+  @user = User.new(user_params)
+  
+  # --- ADD THIS LINE TO SET THE DEFAULT ROLE ---
+  # If this controller is for students, set role to 'student'
+  # If you have another way to determine the role (e.g., a hidden field), 
+  # you'd need to permit it below.
+  @user.role = 'student' 
+  
+  if @user.save
+    reset_session
+    session[:user_id] = @user.id 
+    redirect_to welcome_path(locale: I18n.locale), notice: I18n.t('users.signed_up')
+  else
+    render :new, status: :unprocessable_content
+  end
+end
+
+# --- DO NOT add :role to user_params if you set it manually like this ---
+private
+def user_params
+  params.require(:user).permit(:username, :email, :password)
+end
 
   # PATCH /users
   # Updates the current user's profile based on the submitted parameters.

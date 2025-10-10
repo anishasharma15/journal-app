@@ -16,18 +16,19 @@ class SigninController < ApplicationController
       session[:user_id] = user.id
 
       # Redirect based on the user's role
+      # Redirect based on the user's role
       if user.role == 'teacher'
         flash[:success] = "Welcome back, Teacher!"
         redirect_to teacher_account_path
         
       elsif user.role == 'student'
         flash[:success] = "Welcome back, Student!"
-        redirect_to student_account_path
+        redirect_to student_account_path # <-- This is what should run
         
       else
         # Fallback if role is not set
         flash[:success] = "Login successful!"
-        redirect_to root_path
+        redirect_to root_path # <-- This is the redirect that is running!
       end
 
     else
