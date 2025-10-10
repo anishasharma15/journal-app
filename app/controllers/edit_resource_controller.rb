@@ -1,0 +1,2 @@
+class EditResourceController < ApplicationController
+end

@@ -1,0 +1,2 @@
+module EditResourceHelper
+end

@@ -26,12 +26,18 @@
           <%= form.submit "Upload Resource", class: "btn btn-primary me-3" %>
 
         <br>
-
           <%= form.submit "Edit Resource", class: "btn btn-primary me-3" %>
 
-        <br>
 
-          <%= form.submit "Delete Resource", class: "btn btn-primary me-3" %>
+        <br>
+        
+          <%= link_to "Delete Resource", @resource, 
+              data: { 
+                turbo_method: :delete,           # Uses Turbo to send a DELETE request
+                turbo_confirm: "Are you sure?"   # Prompts the user for confirmation
+              }, 
+              class: "btn btn-primary" %>
+
       </div>
 
       <% end %>
