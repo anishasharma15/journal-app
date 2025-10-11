@@ -23,9 +23,12 @@
 
   <% if user_signed_in? %>
 
+    <%# Study Groups link %>
+    <%= link_to "Study Groups", study_groups_path, class: "nav-link text-light me-3" %>
+
     <%# Profile link %>
     <%= link_to "Profile", profile_path, class: "nav-link text-light me-3" %>
-    
+
     
     <%# Optional: Display the user's name/email %>
     <span class="navbar-text me-3 text-light">
@@ -34,6 +37,7 @@
     
     <%# Sign Out button %>
     <%= link_to "Sign Out", sign_out_path, data: { turbo_method: :delete }, class: "btn btn-light" %>
+
 
   <% else %>
 

@@ -33,4 +33,6 @@ Rails.application.routes.draw do
   get 'teacheraccount', to: 'teacheraccount#index', as: 'teacher_account'
   get 'studentaccount', to: 'studentaccount#index', as: 'student_account'
 #  get 'resources/edit', to: 'resources#edit', as: 'edit_resource' #
+
+resources :study_groups
 end

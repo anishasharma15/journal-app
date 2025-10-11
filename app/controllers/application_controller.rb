@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
-   helper_method :current_user, :user_signed_in? , :profile_path
+   helper_method :current_user, :user_signed_in? , :profile_path, :study_groups_path
 
   def current_user
     # Ensure this logic correctly fetches your user
