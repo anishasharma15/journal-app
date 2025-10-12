@@ -1,62 +1,69 @@
 <div class="container">
   <div class="row mt-5 justify-content-center">
-    <div class="col-12 text-center">  <%# Sets column width and centers text %>
+    <%# Use col-lg-6 for a narrow, centered form %>
+    <div class="col-12 col-lg-6 text-center">  
 
       <h3>Upload New Resource</h3>
 
-      <%= form_with(model: @resource, local:true) do |form| %>
+      <%= form_with(model: @resource, local: true) do |form| %>
         
-        <div class="mb-3">
+        <div class="mb-3 text-start">
           <%= form.label :title, class: "form-label" %>
           <%= form.text_field :title, class: "form-control" , required: true , placeholder: "Enter resource title" %>
         </div>
 
-        <div class="mb-3">
+        <div class="mb-3 text-start">
           <%= form.label :subject, class: "form-label" %>
           <%= form.text_field :subject, class: "form-control" , required: true , placeholder: "e.g. Maths, Science, History" %>
         </div>
 
-        <div class="mb-3">
+        <div class="mb-3 text-start">
           <%= form.label :grade_level, class: "form-label" %>
           <%= form.text_field :grade_level, class: "form-control" , required: true , placeholder: "e.g. GCSE, A-Level, University" %>
         </div>
 
-        <div class="mb-3">
+        <div class="mb-3 text-start">
           <%= form.label :resource_type, class: "form-label" %>
           <%= form.text_field :resource_type, class: "form-control" , required: true , placeholder: "e.g. Worksheet, Notes, Video, Document" %>
         </div>
 
-        <div class="mb-3">
+        <div class="mb-3 text-start">
           <%= form.label :description, class: "form-label" %>
           <%= form.text_area :description, class: "form-control", required: true , placeholder: "Provide a brief description of the resource" %>
         </div>
 
-        <div class="mb-3">
+        <div class="mb-3 text-start">
           <%= form.label :upload_file_or_link, class: "form-label" %>
           <%= form.text_field :upload_file_or_link, class: "form-control" , required: true , placeholder: "Paste link or upload file" %>
         </div>
 
-      <div class="d-flex justify-content-center">
+        <%# --- SUBMIT BUTTONS (Inside the form block) --- %>
+        <div class="d-flex justify-content-center my-4">
+          <%= form.submit "Upload Resource", class: "btn btn-primary me-2", data: { disable_with: false } %>
+  
+          <%# ... other buttons %>
+          </div>
+            
+            <%# NOTE: Delete button should ONLY appear on the EDIT page,
+            # and is styled as btn-danger and correctly uses delete method.
+            # It's wrapped in a check to ensure @resource is saved (persisted). %>
+            <% if @resource.persisted? %>
+              <%= link_to "Delete Resource", @resource, 
+                  data: { 
+                    turbo_method: :delete,
+                    turbo_confirm: "Are you sure you want to delete this resource?"
+                  }, 
+                  class: "btn btn-danger" %>
+            <% end %>
+        </div>
 
-          <%= form.submit "Upload Resource", class: "btn btn-primary me-3" %>
-
-        <br>
-
-          <%= link_to "Delete Resource", @resource, 
-              data: { 
-                turbo_method: :delete,           # Uses Turbo to send a DELETE request
-                turbo_confirm: "Are you sure?"   # Prompts the user for confirmation
-              }, 
-              class: "btn btn-primary" %>
-
+      <% end %> <%# <-- CLOSES THE FORM_WITH BLOCK %>
+      
+      <%# --- BACK BUTTON (Outside the form block) --- %>
+      <div class="d-flex justify-content-center mt-3">
+        <%= link_to "Back to Browse Resources", browse_resources_path, class: "btn btn-secondary" %>
       </div>
 
-      <% end %>
-
-      <br>
-
-      <%= link_to "Back to Browse Resources", browse_resources_path, class: "btn btn-secondary" %>
-      
     </div>
   </div>
 </div>

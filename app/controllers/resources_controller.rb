@@ -1,20 +1,17 @@
 class ResourcesController < ApplicationController
   
+  # Ensure user is authenticated before performing actions (assuming you have auth set up)
+  # before_action :authenticate_user! # Uncomment if using a gem like Devise
+
   # List all resources (browse page) - This will be the main display action
   def browse
     # Use the combined method from the model to handle keyword search and all filters
     @resources = Resource.search_and_filter(params)
-    
-    # Note: If you have a separate 'index' view, you can either remove it 
-    # or alias it to this 'browse' action in your routes.
   end
 
   # Standard index (optional, can alias to browse) - Logic removed as 'browse' handles it
-  # If you use 'index' in your routes, it's best to keep this action, 
-  # but simplify it to call the same logic as browse.
   def index
     # We delegate filtering logic to the 'browse' action's implementation
-    # Note: In a real app, you would likely just make one of these primary.
     @resources = Resource.search_and_filter(params)
   end
 
@@ -25,35 +22,56 @@ class ResourcesController < ApplicationController
 
   # Handle form submission
   def create
-    @resource = Resource.new(resource_params)
+    # CRITICAL FIX: Build the resource through the user association
+    # This automatically assigns the current_user.id to the user_id column
+    # If using Devise: @resource = current_user.resources.new(resource_params)
+    @resource = current_user.resources.new(resource_params)
+
     if @resource.save
       redirect_to browse_resources_path, notice: "Resource successfully created!"
     else
-      render :new
+      # If validation fails, render the new template
+      # @resource will contain the validation errors
+      render :new, status: :unprocessable_entity
     end
   end
 
   # Form to edit an existing resource
   def edit
+    # Ensure the user can only edit resources they own
     @resource = Resource.find(params[:id])
-      if @resource.nil?
-    redirect_to browse_resources_path, alert: "Resource not found."
-  end
+    
+    # Conditional logic is often safer than just setting @resource = nil
+    unless @resource.user == current_user
+      redirect_to browse_resources_path, alert: "You are not authorized to edit this resource."
+    end
   end
 
   # Handle update submission
   def update
     @resource = Resource.find(params[:id])
+
+    # SECURITY CHECK: Ensure user owns resource before updating
+    unless @resource.user == current_user
+      return redirect_to browse_resources_path, alert: "You are not authorized to update this resource."
+    end
+
     if @resource.update(resource_params)
       redirect_to browse_resources_path, notice: "Resource successfully updated!"
     else
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   end
 
   # Delete a resource
   def destroy
     @resource = Resource.find(params[:id])
+    
+    # SECURITY CHECK: Ensure user owns resource before deleting
+    unless @resource.user == current_user
+      return redirect_to browse_resources_path, alert: "You are not authorized to delete this resource."
+    end
+
     @resource.destroy
     redirect_to browse_resources_path, notice: "Resource deleted successfully."
   end
@@ -62,12 +80,18 @@ class ResourcesController < ApplicationController
     @resource = Resource.find(params[:id]) 
   end
 
-  # REMOVED DUPLICATE 'browse' METHOD HERE
-
   private
 
   # Strong parameters
   def resource_params
-    params.require(:resource).permit(:title, :subject, :grade_level, :resource_type, :description, :upload_file_or_link)
+    params.require(:resource).permit(
+      :title, 
+      :subject, 
+      :grade_level, 
+      :resource_type, 
+      :description, 
+      :upload_file_or_link
+      # DO NOT include :user_id here, assign it in the controller for security
+    )
   end
 end

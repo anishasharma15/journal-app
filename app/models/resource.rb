@@ -1,4 +1,7 @@
 class Resource < ApplicationRecord
+    belongs_to :user
+    
+    # The combined search and filter method
     def self.search_and_filter(params)
     resources = all
     query = params[:query]
