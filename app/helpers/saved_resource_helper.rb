@@ -1,0 +1,2 @@
+module SavedResourceHelper
+end

@@ -1,32 +1,33 @@
 <style>
-  .card-text {
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    transition: all 0.3s;
-  }
+.card-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: all 0.3s;
+}
 
-  .card-text.expanded {
-    -webkit-line-clamp: unset;
-    overflow: visible;
-  }
+.card-text.expanded {
+  -webkit-line-clamp: unset;
+  overflow: visible;
+}
 
-  .card {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-  }
+.card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
 
-  .card-body {
-    display: flex;
-    flex-direction: column;
-  }
+.card-body {
+  display: flex;
+  flex-direction: column;
+}
 
-  .card-actions {
-    margin-top: auto;
-  }
+.card-actions {
+  margin-top: auto;
+  flex-wrap: wrap;
+}
 </style>
 
 <div class="container">
@@ -48,19 +49,19 @@
   <br>
 
   <!-- Filter Dropdowns -->
-  <%= form_with(url: browse_resources_path, method: :get, local: true, class: "d-flex justify-content-start align-items-center mb-4") do |form| %>
+  <%= form_with(url: browse_resources_path, method: :get, local: true, class: "d-flex justify-content-start align-items-center mb-4") do %>
     <%= hidden_field_tag :query, params[:query] %>
 
     <div class="me-3">
-      <%= select_tag :subject, options_for_select(['Maths', 'Science', 'History', 'English', 'Economics', 'Geography'], params[:subject]), include_blank: 'Filter by Subject', class: 'form-select', onchange: 'this.form.submit();' %>
+      <%= select_tag :subject, options_for_select(['Maths','Science','History','English','Economics','Geography'], params[:subject]), include_blank: 'Filter by Subject', class: 'form-select', onchange: 'this.form.submit();' %>
     </div>
 
     <div class="me-3">
-      <%= select_tag :level, options_for_select(['GCSE', 'A-Level', 'Undergraduate', 'Postgraduate'], params[:level]), include_blank: 'Filter by Level', class: 'form-select', onchange: 'this.form.submit();' %>
+      <%= select_tag :level, options_for_select(['GCSE','A-Level','Undergraduate','Postgraduate'], params[:level]), include_blank: 'Filter by Level', class: 'form-select', onchange: 'this.form.submit();' %>
     </div>
 
     <div class="me-3">
-      <%= select_tag :resource_type, options_for_select(['Document', 'Video', 'Quiz', 'Website', 'TedTalk', 'Forum'], params[:resource_type]), include_blank: 'Filter by Type', class: 'form-select', onchange: 'this.form.submit();' %>
+      <%= select_tag :resource_type, options_for_select(['Document','Video','Quiz','Website','TedTalk','Forum'], params[:resource_type]), include_blank: 'Filter by Type', class: 'form-select', onchange: 'this.form.submit();' %>
     </div>
   <% end %>
 
@@ -80,14 +81,27 @@
                 <%= resource.description %>
               </p>
 
-              <div class="card-actions d-flex justify-content-between">
-                <a href="<%= resource.upload_file_or_link %>" class="btn btn-sm btn-outline-primary" target="_blank">Link to Resource</a>
+              <div class="card-actions d-flex justify-content-start flex-wrap pt-2">
 
+                <!-- 1. LINK TO RESOURCE -->
+                <a href="<%= resource.upload_file_or_link %>" class="btn btn-sm btn-outline-primary me-2 mb-2" target="_blank">Link to Resource</a>
+
+                <% if current_user && @saved_resource_ids.include?(resource.id) %>
+                  <% saved_item = current_user.saved_resources.find_by(resource_id: resource.id) %>
+                  <%= button_to "Unsave", saved_resource_path(saved_item), method: :delete, class: "btn btn-sm btn-secondary me-2 mb-2" %>
+                <% elsif current_user %>
+                  <%= button_to "Save Resource", saved_resources_path(resource_id: resource.id), method: :post, class: "btn btn-sm btn-success me-2 mb-2" %>
+                <% else %>
+                  <button class="btn btn-sm btn-outline-secondary me-2 mb-2" disabled>Sign In to Save</button>
+                <% end %>
+
+                <!-- 3. READ MORE BUTTON -->
                 <% if resource.description.length > 100 %>
-                  <button class="btn btn-sm btn-outline-secondary read-more-btn" data-target-id="description-<%= resource.id %>">
+                  <button class="btn btn-sm btn-outline-secondary read-more-btn mb-2" data-target-id="description-<%= resource.id %>">
                     Read More
                   </button>
                 <% end %>
+
               </div>
             </div>
           </div>
@@ -104,16 +118,15 @@
   <br>
 </div>
 
-<!-- One-time Script (Do NOT place inside loop!) -->
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    document.querySelectorAll('.read-more-btn').forEach(button => {
-      button.addEventListener('click', function() {
-        const targetId = this.getAttribute('data-target-id');
-        const descriptionElement = document.getElementById(targetId);
-        const isExpanded = descriptionElement.classList.toggle('expanded');
-        this.textContent = isExpanded ? 'Read Less' : 'Read More';
-      });
+document.addEventListener('turbo:load', function() {
+  document.querySelectorAll('.read-more-btn').forEach(button => {
+    button.addEventListener('click', function() {
+      const targetId = this.getAttribute('data-target-id');
+      const descriptionElement = document.getElementById(targetId);
+      const isExpanded = descriptionElement.classList.toggle('expanded');
+      this.textContent = isExpanded ? 'Read Less' : 'Read More';
     });
   });
+});
 </script>

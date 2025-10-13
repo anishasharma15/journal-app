@@ -31,6 +31,7 @@ Rails.application.routes.draw do
   post '/signin', to: 'signin#create'
   delete '/signout', to: 'signin#destroy', as: 'sign_out'
   get 'teacheraccount', to: 'teacheraccount#index', as: 'teacher_account'
+  resources :saved_resources, only: [:create, :destroy]
   get 'studentaccount', to: 'studentaccount#index', as: 'student_account'
 # get 'resources/edit', to: 'resources#edit', as: 'edit_resource'#
 

@@ -4,9 +4,12 @@ class ResourcesController < ApplicationController
   # before_action :authenticate_user! # Uncomment if using a gem like Devise
 
   # List all resources (browse page) - This will be the main display action
-  def browse
-    # Use the combined method from the model to handle keyword search and all filters
-    @resources = Resource.search_and_filter(params)
+   def browse
+    # Fetch all resources
+    @resources = Resource.all
+
+    # Safe: if user is logged in, get saved resource ids; else empty array
+    @saved_resource_ids = current_user ? current_user.saved_resources.pluck(:resource_id) : []
   end
 
   # Standard index (optional, can alias to browse) - Logic removed as 'browse' handles it

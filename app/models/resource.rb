@@ -1,5 +1,6 @@
 class Resource < ApplicationRecord
     belongs_to :user
+    has_many :saved_resources, dependent: :destroy
     
     # The combined search and filter method
     def self.search_and_filter(params)

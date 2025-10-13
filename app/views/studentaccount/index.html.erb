@@ -47,128 +47,47 @@
 
 <br>
 
-  <h5 class="text-center">My Resources</h5>
+ <div class="container">
+  <h3 class="mt-4">Saved Resources</h3>
 
-<%= form_with(url: teacher_account_path, method: :get, local: true, class: "d-flex justify-content-start align-items-center mb-4") do |form| %>
-
-    <%= hidden_field_tag :query, params[:query] %>
-    
-    <div class="me-3">
-      <%= select_tag :subject, 
-                      options_for_select(['Maths', 'Science', 'History', 'English', 'Economics', 'Geography'], params[:subject]), 
-                      { include_blank: 'Filter by Subject', class: 'form-select', onchange: 'this.form.submit();' } %>
-    </div>
-
-    <div class="me-3">
-      <%= select_tag :level, 
-                      options_for_select(['GCSE', 'A-Level', 'Undergraduate', 'Postgraduate'], params[:level]), 
-                      { include_blank: 'Filter by Level', class: 'form-select', onchange: 'this.form.submit();' } %>
-    </div>
-
-    <div class="me-3">
-      <%= select_tag :resource_type, 
-                      options_for_select(['Document', 'Video', 'Quiz', 'Website', 'TedTalk', 'Forum'], params[:resource_type]), 
-                      { include_blank: 'Filter by Type', class: 'form-select', onchange: 'this.form.submit();' } %>
-    </div>
-  <% end %>
-
-<table class="table table-striped table-hover align-middle">
-  <thead class="table-light">
-    <tr>
-      <%# --- SORTING LINK: Title (Kept simple) --- %>
-      <th scope="col">Title</th>
-      
-      <%# --- DROPDOWN FILTER: SUBJECT --- %>
-      <th scope="col" class="text-center">
-        <div class="dropdown">
-          <button class="btn btn-sm btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Subject
-          </button>
-          <ul class="dropdown-menu">
-            <li><%= link_to "All Subjects", resources_path(subject: nil), class: "dropdown-item" %></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><%= link_to "Math", resources_path(subject: 'Math'), class: "dropdown-item" %></li>
-            <li><%= link_to "History", resources_path(subject: 'History'), class: "dropdown-item" %></li>
-          </ul>
-        </div>
-      </th>
-      
-      <%# --- DROPDOWN FILTER: LEVEL --- %>
-      <th scope="col" class="text-center">
-        <div class="dropdown">
-          <button class="btn btn-sm btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Level
-          </button>
-          <ul class="dropdown-menu">
-            <li><%= link_to "All Levels", resources_path(level: nil), class: "dropdown-item" %></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><%= link_to "GCSE", resources_path(level: 'GCSE'), class: "dropdown-item" %></li>
-            <li><%= link_to "A-Level", resources_path(level: 'A-Level'), class: "dropdown-item" %></li>
-          </ul>
-        </div>
-      </th>
-      
-      <%# --- DROPDOWN FILTER: RESOURCE TYPE --- %>
-      <th scope="col" class="text-center">
-        <div class="dropdown">
-          <button class="btn btn-sm btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Resource Type
-          </button>
-          <ul class="dropdown-menu">
-            <li><%= link_to "All Types", resources_path(type: nil), class: "dropdown-item" %></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><%= link_to "PDF", resources_path(type: 'PDF'), class: "dropdown-item" %></li>
-            <li><%= link_to "Video", resources_path(type: 'Video'), class: "dropdown-item" %></li>
-          </ul>
-        </div>
-      </th>
-      
-      <%# --- SORTING LINK: Tutor --- %>
-      <th scope="col" class="text-center">Tutor</th>
-      
-      <%# --- SORTING LINK: Rating --- %>
-      <th scope="col" class="text-center">
-        <%= link_to "Rating", resources_path(sort: 'rating', direction: 'desc'), class: "text-decoration-none text-dark" %>
-      </th>
-
-        <th scope="col" class="text-center">
-        <%= link_to "Download", resources_path(sort: 'download', direction: 'desc'), class: "text-decoration-none text-dark" %>
-      </th>
-
-    <div>
-      
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Introduction to Vectors</td>
-      <td class="text-center">Math</td>
-      <td class="text-center">A-Level</td>
-      <td class="text-center">Worksheet</td>
-      <td class="text-center">Ms. Smith</td>
-      <td class="text-center">⭐4.8</td>
-      <td class="text-center"><%= link_to '⬇️', '#', class: 'download-icon text-center' %></td>
-    </tr>
-    <tr>
-      <td>French Revolution Timeline</td>
-      <td class="text-center">History</td>
-      <td class="text-center">GCSE</td>
-      <td class="text-center">Notes</td>
-      <td class="text-center">Mr. Jones</td>
-      <td class="text-center">⭐4.2</td>
-      <td class="text-center"><%= link_to '⬇️', '#', class: 'download-icon text-center' %></td>
-    </tr>
-    <tr>
-      <td>DSGE Model</td>
-      <td class="text-center">Economics</td>
-      <td class="text-center">University</td>
-      <td class="text-center">Video</td>
-      <td class="text-center">Miss. Sharma</td>
-      <td class="text-center">⭐5.0</td>
-      <td class="text-center"><%= link_to '⬇️', '#', class: 'download-icon text-center' %></td>
-    </tr>
-  </tbody>
-</table>
+  <table class="table table-striped table-hover align-middle mt-3">
+    <thead class="table-light">
+      <tr>
+        <th>Title</th>
+        <th class="text-center">Subject</th>
+        <th class="text-center">Level</th>
+        <th class="text-center">Type</th>
+        <th class="text-center">Tutor</th>
+        <th class="text-center">Link</th>
+        <th class="text-center">Unsave</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if @saved_resource_joins.present? %>
+        <% @saved_resource_joins.each do |saved_item| %>
+          <% resource = saved_item.resource %>
+          <tr>
+            <td><%= resource.title %></td>
+            <td class="text-center"><%= resource.subject %></td>
+            <td class="text-center"><%= resource.grade_level %></td>
+            <td class="text-center"><%= resource.resource_type %></td>
+            <td class="text-center"><%= resource.user.email %></td>
+            <td class="text-center">
+              <%= link_to "🔗", resource.upload_file_or_link, target: "_blank" %>
+            </td>
+            <td>
+               <%= button_to "Unsave", saved_resource_path(saved_item), method: :delete, class: "btn btn-sm btn-danger" %>
+            </td>
+          </tr>
+        <% end %>
+      <% else %>
+        <tr>
+          <td colspan="7" class="text-center text-muted">No saved resources yet.</td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
     </div>
   </div>
 </div>
