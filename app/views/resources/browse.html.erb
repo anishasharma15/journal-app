@@ -37,7 +37,7 @@
   <!-- Search Bar -->
   <div class="row">
     <div class="col-12">
-      <%= form_with(url: browse_resources_path, method: :get, local: true, class: "d-flex mt-3") do |form| %>
+      <%= form_with(url: browse_resources_path, method: :get, data: { turbo: false }, class: "d-flex mt-3") do |form| %>
         <%= form.text_field :query, value: params[:query], class: "form-control me-2", placeholder: "Find resources by subject or topic" %>
         <div class="input-group-append">
           <%= form.submit "Search", class: "btn btn-outline-success" %>
@@ -49,7 +49,7 @@
   <br>
 
   <!-- Filter Dropdowns -->
-  <%= form_with(url: browse_resources_path, method: :get, local: true, class: "d-flex justify-content-start align-items-center mb-4") do %>
+  <%= form_with(url: browse_resources_path, method: :get, data: { turbo: false }, class: "d-flex justify-content-start align-items-center mb-4") do %>
     <%= hidden_field_tag :query, params[:query] %>
 
     <div class="me-3">
@@ -64,6 +64,7 @@
       <%= select_tag :resource_type, options_for_select(['Document','Video','Quiz','Website','TedTalk','Forum'], params[:resource_type]), include_blank: 'Filter by Type', class: 'form-select', onchange: 'this.form.submit();' %>
     </div>
   <% end %>
+  
 
   <!-- Resource Cards -->
   <% if @resources.any? %>
@@ -95,12 +96,11 @@
                   <button class="btn btn-sm btn-outline-secondary me-2 mb-2" disabled>Sign In to Save</button>
                 <% end %>
 
-                <!-- 3. READ MORE BUTTON -->
-                <% if resource.description.length > 100 %>
-                  <button class="btn btn-sm btn-outline-secondary read-more-btn mb-2" data-target-id="description-<%= resource.id %>">
-                    Read More
-                  </button>
-                <% end %>
+              <% if true || resource.description.length > 100 %>
+                <button class="btn btn-sm btn-outline-secondary read-more-btn mb-2" data-target-id="description-<%= resource.id %>">
+                  Read More
+              </button>
+              <% end %>           
 
               </div>
             </div>

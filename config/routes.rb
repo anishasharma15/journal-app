@@ -15,14 +15,10 @@ end
 
 Rails.application.routes.draw do
   root 'resources#index'
-  
-  # 1. MOVE STATIC ROUTE HERE (Must be first)
-  get 'resources/browse', to: 'resources#browse', as: 'browse_resources'
 
-  # 2. Dynamic resources block comes second
-  resources :resources, only: [:create, :new, :destroy, :edit, :update, :index, :show]
+  get 'resources/browse', to: 'resources#browse', as: 'browse_resources'
   
-  # ... rest of your routes (createaccount, signup, signin, etc.)
+  resources :resources, only: [:create, :new, :destroy, :edit, :update, :index, :show]
   resources :createaccount, only: [:new, :create], path: 'createaccount'
   get  'signup', to: 'users#new',    as: 'sign_up'
   post 'signup', to: 'users#create'

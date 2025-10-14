@@ -1,21 +1,30 @@
 class ResourcesController < ApplicationController
-  
   # Ensure user is authenticated before performing actions (assuming you have auth set up)
   # before_action :authenticate_user! # Uncomment if using a gem like Devise
 
-  # List all resources (browse page) - This will be the main display action
-   def browse
-    # Fetch all resources
-    @resources = Resource.all
+  # List all resources (BROWSE page) - This will handle search, filtering, and the full resource list.
+  def browse
+    # Fetch all resources based on search and filter parameters
+    @resources = Resource.search_and_filter(params)
 
     # Safe: if user is logged in, get saved resource ids; else empty array
     @saved_resource_ids = current_user ? current_user.saved_resources.pluck(:resource_id) : []
+
+    # Rails will render app/views/resources/browse.html.erb
   end
 
-  # Standard index (optional, can alias to browse) - Logic removed as 'browse' handles it
+  # Standard index (HOME page) - This should contain logic for the Home Page content.
   def index
-    # We delegate filtering logic to the 'browse' action's implementation
-    @resources = Resource.search_and_filter(params)
+    # IMPORTANT: Remove the redirect!
+
+    # Example logic for a home page (e.g., featured resources, stats, or a simple welcome)
+    # This assumes you have a `featured` scope or method on your Resource model.
+    @featured_resources = Resource.limit(3) 
+    @total_resources = Resource.count
+    @recent_activity = current_user.nil? ? [] : current_user.recent_activity.limit(5)
+    
+    # You must have a corresponding view: app/views/resources/index.html.erb
+    # If the Home Page is simple, this action might do very little besides set up basic data.
   end
 
   # Form for new resource

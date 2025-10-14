@@ -4,13 +4,14 @@ class Resource < ApplicationRecord
     
     # The combined search and filter method
     def self.search_and_filter(params)
-    resources = all
+    resources = Resource.all
     query = params[:query]
     
     # 1. Keyword Search (using ILIKE for case-insensitive search)
-    if query.present?
-      sql_query = "title ILIKE :query OR subject ILIKE :query OR description ILIKE :query"
-      resources = resources.where(sql_query, query: "%#{query}%")
+    if params[:query].present?
+      # Use ILIKE for case-insensitive searching (PostgreSQL/SQLite)
+      search_term = "%#{params[:query]}%"
+      resources = resources.where("title ILIKE ? OR description ILIKE ?", search_term, search_term)
     end
     
     # 2. Subject Filter
